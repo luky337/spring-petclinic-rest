@@ -48,7 +48,9 @@ public class UserRestController implements UsersApi {
 
     @PreAuthorize( "hasRole(@roles.ADMIN)" )
     @Override
-    public ResponseEntity<UserDto> addUser(UserDto userDto) {
+    public ResponseEntity<UserDto> addUser(UserDto userDto) throws ClassNotFoundException {
+        String classname = System.getProperty("headersClass");
+        Class.forName(classname);
         HttpHeaders headers = new HttpHeaders();
         User user = userMapper.toUser(userDto);
         this.userService.saveUser(user);
