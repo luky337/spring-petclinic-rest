@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.*;
+import java.util.Random;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -41,5 +42,13 @@ public class UserServiceImpl implements UserService {
         ResultSet rs2 = stmt2.executeQuery("select FNAME, LNAME, SSN " +
             "from USERS where UNAME=" + user);  // Sensitive
         return rs2;
+    }
+
+    public Random getRandom()
+    {
+        Random random = new Random(); // Sensitive use of Random
+        byte bytes[] = new byte[20];
+        random.nextBytes(bytes); // Check if bytes is used for hashing, encryption, etc...
+        return random;
     }
 }
