@@ -7,6 +7,8 @@ import org.springframework.samples.petclinic.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.*;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -32,5 +34,12 @@ public class UserServiceImpl implements UserService {
         }
 
         userRepository.save(user);
+    }
+
+    public ResultSet findUser(Connection connection, String user) throws SQLException {
+        Statement stmt2 = connection.createStatement();
+        ResultSet rs2 = stmt2.executeQuery("select FNAME, LNAME, SSN " +
+            "from USERS where UNAME=" + user);  // Sensitive
+        return rs2;
     }
 }
